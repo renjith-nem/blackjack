@@ -67,7 +67,7 @@ export class Deck {
         // Source : https://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/
         let size = this._cards.length;
         let tempArr = [];
-        for ( var i = 0; i < size-1; i++ ) {
+        for (let i = 0; i < size-1; i++) {
             tempArr.push(this._cards.splice(Math.floor(Math.random()*this._cards.length),1)[0]);
         }
         tempArr.push(this._cards[0]);
