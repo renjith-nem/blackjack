@@ -67,13 +67,14 @@ export class Deck {
                 }
             }
         }
+        this.shuffleCards();
     }
 
     getCards() {
         return this._cards;
     }
 
-    shuffleCards(){
+    private shuffleCards(){
         // Source : https://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/
         let size = this._cards.length;
         let tempArr = [];
@@ -86,5 +87,11 @@ export class Deck {
 
     drawCard(){
         return this._cards.pop();
+    }
+
+    // DANGER: This function is used only for testing purposes and not to be used on actual development.
+    setCards(cards:Array<Card>){
+        this._cards = new Array<Card>();
+        Array.prototype.push.apply(this._cards, cards);
     }
 }
