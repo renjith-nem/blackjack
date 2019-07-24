@@ -1,4 +1,4 @@
-import {Deck, Suite, CardValue, Card} from "./Deck";
+import { Deck, Suite, CardValue, Card } from "./Deck";
 
 // Cannot test the shuffle logic as it can have probablilty instances when
 // The shuffle will yield what we are expecting in the asserts.
@@ -10,7 +10,7 @@ test('Test Deck Initialization', () => {
 test('Test Deck Draw cards', () => {
     let deck = new Deck();
     expect(deck.getCards().length).toEqual(52);
-    
+
     let expectedLastCard = deck.getCards()[51];
     expect(expectedLastCard).toBeDefined();
 
@@ -21,7 +21,7 @@ test('Test Deck Draw cards', () => {
 
     expectedLastCard = deck.getCards()[50];
     expect(expectedLastCard).toBeDefined();
-    
+
     cardDrawn = deck.drawCard();
     expect(cardDrawn).toBeDefined();
     expect(deck.getCards().length).toEqual(50);

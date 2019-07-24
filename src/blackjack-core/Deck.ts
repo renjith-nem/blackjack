@@ -38,7 +38,7 @@ export class Card {
         this._hidden = hidden;
     }
 
-    setCardStateHidden(){
+    setCardStateHidden() {
         this._hidden = true;
     }
 
@@ -74,23 +74,23 @@ export class Deck {
         return this._cards;
     }
 
-    private shuffleCards(){
+    private shuffleCards() {
         // Source : https://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/
         let size = this._cards.length;
         let tempArr = [];
-        for (let i = 0; i < size-1; i++) {
-            tempArr.push(this._cards.splice(Math.floor(Math.random()*this._cards.length),1)[0]);
+        for (let i = 0; i < size - 1; i++) {
+            tempArr.push(this._cards.splice(Math.floor(Math.random() * this._cards.length), 1)[0]);
         }
         tempArr.push(this._cards[0]);
-        this._cards=tempArr;
+        this._cards = tempArr;
     }
 
-    drawCard(){
+    drawCard() {
         return this._cards.pop();
     }
 
     // DANGER: This function is used only for testing purposes and not to be used on actual development.
-    setCards(cards:Array<Card>){
+    setCards(cards: Array<Card>) {
         this._cards = new Array<Card>();
         Array.prototype.push.apply(this._cards, cards);
     }

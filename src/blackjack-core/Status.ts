@@ -1,29 +1,29 @@
 import UserType from './UserType'
-import {Card} from './Deck'
-export class Status{
+import { Card } from './Deck'
+export class Status {
 
-    private _gameStatus:GameStatus;
-    private _players:Array<GamePlayer>;
+    private _gameStatus: GameStatus;
+    private _players: Array<GamePlayer>;
 
-    constructor(gameStatus:GameStatus, players:Array<GamePlayer>){
+    constructor(gameStatus: GameStatus, players: Array<GamePlayer>) {
         this._gameStatus = gameStatus;
         this._players = players;
     }
 
-    getGameStatus(){
+    getGameStatus() {
         return this._gameStatus;
     }
 
-    getPlayers(){
+    getPlayers() {
         return this._players;
     }
 }
 
-export enum GameStatus{
+export enum GameStatus {
     NotStarted = 1,
     InProgress = 2,
     Tie = 3,
-    Completed =4
+    Completed = 4
 }
 
 export enum WinStatus {
@@ -33,53 +33,53 @@ export enum WinStatus {
 }
 
 export class GamePlayer {
-    private _userType:UserType;
-    private _playerId:number;
-    private _winStatus:WinStatus;
-    private _handValue:number;
-    private _betAmountPlaced:number;
-    private _betAmountWon:number;
-    private _cardsInHand:Array<Card>;
+    private _userType: UserType;
+    private _playerId: number;
+    private _winStatus: WinStatus;
+    private _handValue: number;
+    private _betAmountPlaced: number;
+    private _betAmountWon: number;
+    private _cardsInHand: Array<Card>;
 
-    constructor(userType:UserType, betPlaced:number=0, cards:Array<Card>, 
-                winStatus:WinStatus=WinStatus.NA, handValue:number=-1,
-                playerId:number=-1, betWon:number=0){
-        
-        this._handValue=handValue;
-        this._userType=userType;
+    constructor(userType: UserType, betPlaced: number = 0, cards: Array<Card>,
+        winStatus: WinStatus = WinStatus.NA, handValue: number = -1,
+        playerId: number = -1, betWon: number = 0) {
+
+        this._handValue = handValue;
+        this._userType = userType;
         this._cardsInHand = cards;
-        this._winStatus=winStatus;
+        this._winStatus = winStatus;
         //-1 is used for Dealer user type
-        this._playerId=playerId;
+        this._playerId = playerId;
         this._betAmountPlaced = betPlaced;
         this._betAmountWon = betWon;
     }
 
-    getUserType(){
+    getUserType() {
         return this._userType;
     }
 
-    getPlayerId(){
+    getPlayerId() {
         return this._playerId;
     }
 
-    getWinStatus(){
+    getWinStatus() {
         return this._winStatus;
     }
 
-    getHandValue(){
+    getHandValue() {
         return this._handValue;
     }
 
-    getBetPlaced(){
+    getBetPlaced() {
         return this._betAmountPlaced;
     }
 
-    getBetWon(){
+    getBetWon() {
         return this._betAmountWon;
     }
 
-    getCards(){
+    getCards() {
         return this._cardsInHand;
     }
 }
