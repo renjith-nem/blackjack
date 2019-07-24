@@ -16,6 +16,10 @@ export enum CardValue {
     King = 13
 }
 
+export enum HiddenCard {
+    Hidden = -1
+}
+
 export enum Suite {
     Spades = 1,
     Hearts = 2,
@@ -24,12 +28,18 @@ export enum Suite {
 }
 
 export class Card {
+    private _hidden: Boolean;
     private _suite: Suite;
     private _value: CardValue;
 
-    constructor(suite: Suite, value: CardValue) {
+    constructor(suite: Suite, value: CardValue, hidden: Boolean = false) {
         this._suite = suite;
         this._value = value;
+        this._hidden = hidden;
+    }
+
+    setCardStateHidden(){
+        this._hidden = true;
     }
 
     getSuite() {
