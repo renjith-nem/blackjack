@@ -2,7 +2,8 @@ import {Deck, Suite, CardValue, Card, HiddenCard} from './Deck';
 import {Status, GameStatus, GamePlayer, WinStatus} from './Status'
 import UserType from './UserType'
 
-const ACE_FACE_VALUE = 10;
+const ACE_FACE_VALUE = 11;
+const MAX_FACE_VALUE = 10;
 const BLACKJACK_WIN_NUMBER = 21;
 class BlackJack{
     
@@ -32,15 +33,26 @@ class BlackJack{
 
     getStatus(){
         let players = new Array<GamePlayer>();
-        //TODO: update this based on game win.
-        let dealer = new GamePlayer(UserType.Dealer, this._betAmount, this.getDealerCards(),
+        let dealer = undefined;
+        let player = undefined;
+        if(this._status === GameStatus.InProgress){
+            dealer = new GamePlayer(UserType.Dealer, this._betAmount, this.getDealerCards(),
                         WinStatus.NA, 
                         this.getHandValue(UserType.Dealer));
-        let player = new GamePlayer(UserType.Player, this._betAmount, this.getPlayerCards(this._playerId),
+            player = new GamePlayer(UserType.Player, this._betAmount, this.getPlayerCards(this._playerId),
                                     WinStatus.NA, 
                             this.getHandValue(UserType.Player, this._playerId), this._playerId);
+        } else{
+            dealer = new GamePlayer(UserType.Dealer, this._betAmount, this.getDealerCards(),
+                        (this._winner === UserType.Dealer)?WinStatus.Won:WinStatus.Lost, 
+                        this.getHandValue(UserType.Dealer));
+            player = new GamePlayer(UserType.Player, this._betAmount, this.getPlayerCards(this._playerId),
+                        (this._winner === UserType.Player)?WinStatus.Won:WinStatus.Lost,  
+                            this.getHandValue(UserType.Player, this._playerId), this._playerId);
+        }
         players.push(dealer, player);
         let gameStatus = new Status(this._status, players);
+        return gameStatus;
     }
 
     getDealerCards(){
@@ -73,7 +85,6 @@ class BlackJack{
             this.hit(UserType.Player, playerId, 1);
         }
         catch(e){
-            console.log("Error : ", e);
             this.stand(playerId);
         }
         return this.getStatus();
@@ -82,12 +93,10 @@ class BlackJack{
         this.validateIfCanPlay(user, playerId);
         if(user === UserType.Player && playerId === this._playerId){
             Array.prototype.push.apply(this._player_cards, this.getHitCards(hitCount));
-            return this.getPlayerCards(playerId);
         } else if(user == UserType.Dealer){
             Array.prototype.push.apply(this._dealer_cards, this.getHitCards(hitCount));
-            return this.getDealerCards();
         }
-        throw new EvalError('Invalid Player');
+        this.validateIfCanPlay(user, playerId);
     }
 
     stand(playerId:number){
@@ -117,12 +126,12 @@ class BlackJack{
         this._status = GameStatus.Completed;
     }
     private getHandValue(user:UserType, playerId:number=-1){
-        if(user === UserType.Dealer){
+        if(user === UserType.Dealer && this._status == GameStatus.Completed){
             return this.findHandValue(this._dealer_cards);
         } else if(user === UserType.Player && this._playerId === playerId){
             return this.findHandValue(this._player_cards);
         }
-        throw new EvalError('Invalid Player');
+        return 0;
     }
 
     private drawCardsForDealerBlackjack(){
@@ -140,19 +149,51 @@ class BlackJack{
         let aceValue:number = 0;
         cards.forEach(function(card){
             if(card.getCardValue() === CardValue.Ace){
-                aceValue += Number(card.getCardValue);
+                aceValue ++;
+            }else{
+                let cardValue = (Number(card.getCardValue()) > MAX_FACE_VALUE)?MAX_FACE_VALUE:Number(card.getCardValue());
+                handValue += cardValue;
             }
-            handValue += Number(card.getCardValue);
         });
-
-        if(aceValue != 0){
-            let aceSumValue = ACE_FACE_VALUE + handValue;
-            if(aceSumValue > 21){
-                aceSumValue = CardValue.Ace + handValue;
-            }
-            aceValue = aceSumValue;
+        
+        if(aceValue > 0){
+            handValue = this.findMaxHandValueWithAce(handValue, aceValue);
         }
-        return handValue + aceValue
+        return handValue
+    }
+
+    private findMaxHandValueWithAce(handValue:number, noOfAces:number){
+        // Ace value with max value as 1
+        let minAceHandValue = handValue + (noOfAces * Number(CardValue.Ace));
+
+        // Ace with max value of 11
+        let maxAceHandValue = handValue + (noOfAces * ACE_FACE_VALUE);
+
+        // Ace with alternate min value
+        let alt = (noOfAces > 1)?noOfAces/2:noOfAces;
+        let minAltAceHandValue = handValue + (alt * Number(CardValue.Ace)) 
+                                    + ((noOfAces - alt) * ACE_FACE_VALUE); 
+        // Ace with alternate max value
+        let maxAltAceHandValue = handValue + (alt * ACE_FACE_VALUE) 
+                                    + ((noOfAces - alt) * Number(CardValue.Ace));
+        let maxHandValue = minAceHandValue;
+        let diff = BLACKJACK_WIN_NUMBER - minAceHandValue;
+
+        if((BLACKJACK_WIN_NUMBER - maxAceHandValue) > 0 &&  (BLACKJACK_WIN_NUMBER - maxAceHandValue) < diff){
+            maxHandValue = maxAceHandValue;
+            diff = BLACKJACK_WIN_NUMBER - maxAceHandValue; 
+        } 
+        
+        if((BLACKJACK_WIN_NUMBER - minAltAceHandValue) > 0 &&  (BLACKJACK_WIN_NUMBER - minAltAceHandValue) < diff){
+            maxHandValue = minAltAceHandValue;
+            diff = BLACKJACK_WIN_NUMBER - minAltAceHandValue; 
+        }
+
+        if((BLACKJACK_WIN_NUMBER - maxAltAceHandValue) > 0 &&  (BLACKJACK_WIN_NUMBER - maxAltAceHandValue) < diff){
+            maxHandValue = maxAltAceHandValue;
+            diff = BLACKJACK_WIN_NUMBER - maxAltAceHandValue; 
+        }
+        return maxHandValue;
     }
 
     private getHitCards(hitCount:number){
