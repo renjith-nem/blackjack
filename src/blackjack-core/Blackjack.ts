@@ -1,4 +1,4 @@
-import { Deck, Suite, CardValue, Card, HiddenCard } from './Deck';
+import { Deck, CardValue, Card, HiddenCard } from './Deck';
 import { Status, GameStatus, GamePlayer, WinStatus } from './Status';
 import UserType from './UserType';
 
@@ -60,7 +60,7 @@ class BlackJack {
     // Assume that the 0th card is the card faced down. So return the 0th card as hidden.
     let cardsToReturn = new Array<Card>();
     for (let card = 0; card < this._dealer_cards.length; card++) {
-      if (this._status != GameStatus.Completed && card === 1) {
+      if (this._status !== GameStatus.Completed && card === 1) {
         cardsToReturn.push(
           new Card(Number(HiddenCard.Hidden), Number(HiddenCard.Hidden))
         );
@@ -72,7 +72,7 @@ class BlackJack {
   }
 
   getPlayerCards(playerId: number) {
-    if (playerId != this._playerId) {
+    if (playerId !== this._playerId) {
       throw new EvalError('Invalid Player');
     }
     return this._player_cards;
@@ -111,15 +111,15 @@ class BlackJack {
     this.validateIfCanPlay(user, playerId);
     if (user === UserType.Player && playerId === this._playerId) {
       Array.prototype.push.apply(this._player_cards, this.getHitCards(1));
-    } else if (user == UserType.Dealer) {
+    } else if (user === UserType.Dealer) {
       Array.prototype.push.apply(this._dealer_cards, this.getHitCards(1));
     }
     this.validateIfCanPlay(user, playerId);
   }
 
   private calculateAmountWonOrLost(amountWonLost: number): number {
-    if (this._winner == UserType.Player) {
-      if (this._player_cards.length == 2) {
+    if (this._winner === UserType.Player) {
+      if (this._player_cards.length === 2) {
         amountWonLost = this._betAmount + this._betAmount * 1.5;
       } else {
         amountWonLost += this._betAmount * 2;
@@ -132,7 +132,7 @@ class BlackJack {
 
   private validateIfCanPlay(user: UserType, playerId: number) {
     if (
-      user != UserType.Dealer &&
+      user !== UserType.Dealer &&
       (this._status === GameStatus.Completed ||
         this.getHandValue(user, playerId) > BLACKJACK_WIN_NUMBER)
     ) {
@@ -144,8 +144,8 @@ class BlackJack {
     let dealerHandValue = this.getHandValue(UserType.Dealer);
     let playerHandValue = this.getHandValue(UserType.Player, this._playerId);
     if (
-      dealerHandValue == BLACKJACK_WIN_NUMBER &&
-      playerHandValue == BLACKJACK_WIN_NUMBER
+      dealerHandValue === BLACKJACK_WIN_NUMBER &&
+      playerHandValue === BLACKJACK_WIN_NUMBER
     ) {
       this._status = GameStatus.Tie;
       return;
@@ -163,7 +163,7 @@ class BlackJack {
       return;
     }
 
-    if (dealerHandValue == playerHandValue) {
+    if (dealerHandValue === playerHandValue) {
       this._status = GameStatus.Tie;
       return;
     } else if (
@@ -182,7 +182,7 @@ class BlackJack {
     this._status = GameStatus.Completed;
   }
   private getHandValue(user: UserType, playerId: number = -1) {
-    if (user === UserType.Dealer && this._status == GameStatus.Completed) {
+    if (user === UserType.Dealer && this._status === GameStatus.Completed) {
       return this.findHandValue(this._dealer_cards);
     } else if (user === UserType.Player && this._playerId === playerId) {
       return this.findHandValue(this._player_cards);
@@ -196,7 +196,7 @@ class BlackJack {
     }
     try {
       while (this.findHandValue(this._dealer_cards) < 17) {
-        this.hit(UserType.Dealer, -1);
+        this.playHit(UserType.Dealer, -1);
       }
     } catch (e) {
       console.log('Error: ', e);

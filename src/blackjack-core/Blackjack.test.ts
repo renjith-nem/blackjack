@@ -1,7 +1,6 @@
 import { Deck, Suite, CardValue, HiddenCard, Card } from './Deck';
-import { Status, GameStatus, GamePlayer, WinStatus } from './Status';
+import { GameStatus, WinStatus } from './Status';
 import Blackjack from './Blackjack';
-import UserType from './UserType';
 
 const PLAYER_ID = 333;
 

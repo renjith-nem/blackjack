@@ -54,13 +54,12 @@ export class Card {
 export class Deck {
   private _cards: Array<Card>;
   constructor() {
-    this._cards = new Array();
+    this._cards = [];
     for (let suite in Suite) {
-      let suiteValue = Suite[suite];
       var isValueProperty = parseInt(suite, 10) >= 0;
       if (isValueProperty) {
         for (let cardValue in CardValue) {
-          var isValueProperty = parseInt(cardValue, 10) >= 0;
+          isValueProperty = parseInt(cardValue, 10) >= 0;
           if (isValueProperty) {
             this._cards.push(new Card(Number(suite), Number(cardValue)));
           }
