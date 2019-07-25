@@ -3,19 +3,25 @@ import { Card } from './Deck'
 export class Status {
 
     private _gameStatus: GameStatus;
-    private _players: Array<GamePlayer>;
+    private _dealer: GamePlayer;
+    private _player: GamePlayer;
 
-    constructor(gameStatus: GameStatus, players: Array<GamePlayer>) {
+    constructor(gameStatus: GameStatus, dealer: GamePlayer, player:GamePlayer) {
         this._gameStatus = gameStatus;
-        this._players = players;
+        this._player = player;
+        this._dealer = dealer;
     }
 
     getGameStatus() {
         return this._gameStatus;
     }
 
-    getPlayers() {
-        return this._players;
+    getPlayer() {
+        return this._player;
+    }
+
+    getDealer() {
+        return this._dealer;
     }
 }
 

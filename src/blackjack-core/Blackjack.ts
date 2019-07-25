@@ -32,17 +32,9 @@ class BlackJack {
     }
 
     getStatus() {
-        let players = new Array<GamePlayer>();
         let dealer = undefined;
         let player = undefined;
-        if (this._status === GameStatus.InProgress) {
-            dealer = new GamePlayer(UserType.Dealer, this._betAmount, this.getDealerCards(),
-                WinStatus.NA,
-                this.getHandValue(UserType.Dealer));
-            player = new GamePlayer(UserType.Player, this._betAmount, this.getPlayerCards(this._playerId),
-                WinStatus.NA,
-                this.getHandValue(UserType.Player, this._playerId), this._playerId);
-        } else {
+        if (this._status === GameStatus.Completed) {
             dealer = new GamePlayer(UserType.Dealer, this._betAmount, this.getDealerCards(),
                 (this._winner === UserType.Dealer) ? WinStatus.Won : WinStatus.Lost,
                 this.getHandValue(UserType.Dealer));
@@ -50,8 +42,7 @@ class BlackJack {
                 (this._winner === UserType.Player) ? WinStatus.Won : WinStatus.Lost,
                 this.getHandValue(UserType.Player, this._playerId), this._playerId);
         }
-        players.push(dealer, player);
-        let gameStatus = new Status(this._status, players);
+        let gameStatus = new Status(this._status, dealer!, player!);
         return gameStatus;
     }
 

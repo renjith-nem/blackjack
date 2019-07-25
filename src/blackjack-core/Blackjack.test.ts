@@ -124,20 +124,18 @@ test('Test Blackjack Player Win Simulation1 with Deck1', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(17);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.stand(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getDealer().getHandValue()).toEqual(22);
+    expect(status.getPlayer().getHandValue()).toEqual(20);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Player Win Simulation2 with Deck1', () => {
@@ -150,30 +148,26 @@ test('Test Blackjack Player Win Simulation2 with Deck1', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(17);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(11);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.stand(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getPlayer().getHandValue()).toEqual(20);
+    expect(status.getDealer().getHandValue()).toEqual(22);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Dealer Win Simulation2 with Deck1', () => {
@@ -186,30 +180,26 @@ test('Test Blackjack Dealer Win Simulation2 with Deck1', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(17);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(11);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.stand(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getPlayer().getHandValue()).toEqual(20);
+    expect(status.getDealer().getHandValue()).toEqual(22);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Dealer Win Simulation3 with Deck1', () => {
@@ -222,30 +212,26 @@ test('Test Blackjack Dealer Win Simulation3 with Deck1', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(17);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(11);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(30);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(12);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayer().getHandValue()).toEqual(30);
+    expect(status.getDealer().getHandValue()).toEqual(12);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Won);
 });
 
 test('Test Blackjack Dealer Win Simulation1 with Deck2', () => {
@@ -258,15 +244,14 @@ test('Test Blackjack Dealer Win Simulation1 with Deck2', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(26);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(13);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayer().getHandValue()).toEqual(26);
+    expect(status.getDealer().getHandValue()).toEqual(13);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Won);
 });
 
 test('Test Blackjack Dealer Win Simulation1 with Deck2', () => {
@@ -279,15 +264,14 @@ test('Test Blackjack Dealer Win Simulation1 with Deck2', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
 
     blackjack.stand(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(23);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getPlayer().getHandValue()).toEqual(16);
+    expect(status.getDealer().getHandValue()).toEqual(23);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Player Win Simulation1 with Deck3', () => {
@@ -300,51 +284,18 @@ test('Test Blackjack Player Win Simulation1 with Deck3', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
 
     blackjack.stand(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(23);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
-});
-
-test('Test Blackjack Dealer Win Simulation2 with Deck2', () => {
-    let deck = getCustomizedDeck3ForTesting();
-    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
-    blackjack.deal(PLAYER_ID);
-    expect(blackjack.getDealerCards().length).toEqual(2);
-    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
-
-
-    let status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
-
-    blackjack.playHit(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
-
-    blackjack.playHit(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-
-    blackjack.stand(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getPlayer().getHandValue()).toEqual(19);
+    expect(status.getDealer().getHandValue()).toEqual(23);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Player Win Simulation2 with Deck2', () => {
@@ -357,23 +308,48 @@ test('Test Blackjack Player Win Simulation2 with Deck2', () => {
 
     let status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+
+    blackjack.stand(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayer().getHandValue()).toEqual(20);
+    expect(status.getDealer().getHandValue()).toEqual(22);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Lost);
+});
+
+test('Test Blackjack Dealer Win Simulation2 with Deck2', () => {
+    let deck = getCustomizedDeck3ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
 
     blackjack.playHit(PLAYER_ID);
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(29);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(13);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayer().getHandValue()).toEqual(29);
+    expect(status.getDealer().getHandValue()).toEqual(13);
+    expect(status.getPlayer().getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getDealer().getWinStatus()).toEqual(WinStatus.Won);
 });
