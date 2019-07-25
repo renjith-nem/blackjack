@@ -5,11 +5,13 @@ export class Status {
     private _gameStatus: GameStatus;
     private _dealer: GamePlayer;
     private _player: GamePlayer;
+    private _amountWonLost: number;
 
-    constructor(gameStatus: GameStatus, dealer: GamePlayer, player:GamePlayer) {
+    constructor(gameStatus: GameStatus, dealer: GamePlayer, player:GamePlayer, amountWonLost:number=0) {
         this._gameStatus = gameStatus;
         this._player = player;
         this._dealer = dealer;
+        this._amountWonLost = amountWonLost;
     }
 
     getGameStatus() {
@@ -22,6 +24,10 @@ export class Status {
 
     getDealer() {
         return this._dealer;
+    }
+
+    getAmountWonLost() {
+        return this._amountWonLost;
     }
 }
 
