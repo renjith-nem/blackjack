@@ -21,6 +21,55 @@ function getCustomizedDeck1ForTesting() {
     deck.setCards(predefinedCards);
     return deck;
 }
+
+
+function getCustomizedDeck2ForTesting() {
+    let predefinedCards = new Array<Card>();
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Five));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Jack));
+    predefinedCards.push(new Card(Suite.Spades, CardValue.Nine));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Ace));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.Three));
+    predefinedCards.push(new Card(Suite.Spades, CardValue.Ace));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.Six));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.Eight));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Four));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Two));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.King));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Jack));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Six));
+    predefinedCards.push(new Card(Suite.Spades, CardValue.Five));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Eight));
+
+    let deck = new Deck();
+    deck.setCards(predefinedCards);
+    return deck;
+}
+
+function getCustomizedDeck3ForTesting() {
+    let predefinedCards = new Array<Card>();
+    predefinedCards.push(new Card(Suite.Spades, CardValue.Ace));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.Six));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.Eight));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Four));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Two));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.King));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Five));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Jack));
+    predefinedCards.push(new Card(Suite.Spades, CardValue.Nine));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Ace));
+    predefinedCards.push(new Card(Suite.Clubs, CardValue.Three));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Jack));
+    predefinedCards.push(new Card(Suite.Hearts, CardValue.Six));
+    predefinedCards.push(new Card(Suite.Spades, CardValue.Five));
+    predefinedCards.push(new Card(Suite.Diamonds, CardValue.Eight));
+
+    let deck = new Deck();
+    deck.setCards(predefinedCards);
+    return deck;
+}
+
+
 test('Blackjack experiments', () => {
     let arr: Array<number> = new Array<number>();
     let tempArr: Array<number> = new Array<number>();
@@ -65,7 +114,7 @@ test('Test Blackjack Player hit turn', () => {
     expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(3);
 });
 
-test('Test Blackjack Dealer Win Simulation1 with Deck1', () => {
+test('Test Blackjack Player Win Simulation1 with Deck1', () => {
     let deck = getCustomizedDeck1ForTesting();
     let blackjack = new Blackjack(PLAYER_ID, 10, deck);
     blackjack.deal(PLAYER_ID);
@@ -87,8 +136,44 @@ test('Test Blackjack Dealer Win Simulation1 with Deck1', () => {
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
     expect(status.getPlayers()[0].getHandValue()).toEqual(22);
     expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+});
+
+test('Test Blackjack Player Win Simulation2 with Deck1', () => {
+    let deck = getCustomizedDeck1ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(17);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(11);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+
+    blackjack.stand(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Dealer Win Simulation2 with Deck1', () => {
@@ -123,44 +208,8 @@ test('Test Blackjack Dealer Win Simulation2 with Deck1', () => {
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
     expect(status.getPlayers()[1].getHandValue()).toEqual(20);
     expect(status.getPlayers()[0].getHandValue()).toEqual(22);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
-});
-
-test('Test Blackjack Dealer Win Simulation2 with Deck1', () => {
-    let deck = getCustomizedDeck1ForTesting();
-    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
-    blackjack.deal(PLAYER_ID);
-    expect(blackjack.getDealerCards().length).toEqual(2);
-    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
-
-
-    let status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(17);
-
-    blackjack.playHit(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-
-    blackjack.playHit(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(11);
-
-    blackjack.playHit(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-
-    blackjack.stand(PLAYER_ID);
-    status = blackjack.getStatus();
-    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
-    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
-    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
-    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
 });
 
 test('Test Blackjack Dealer Win Simulation3 with Deck1', () => {
@@ -194,7 +243,137 @@ test('Test Blackjack Dealer Win Simulation3 with Deck1', () => {
     status = blackjack.getStatus();
     expect(status.getGameStatus()).toEqual(GameStatus.Completed);
     expect(status.getPlayers()[1].getHandValue()).toEqual(30);
-    expect(status.getPlayers()[0].getHandValue()).toEqual(17);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(12);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+});
+
+test('Test Blackjack Dealer Win Simulation1 with Deck2', () => {
+    let deck = getCustomizedDeck2ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(26);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(13);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
+});
+
+test('Test Blackjack Dealer Win Simulation1 with Deck2', () => {
+    let deck = getCustomizedDeck2ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
+
+    blackjack.stand(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(23);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+});
+
+test('Test Blackjack Player Win Simulation1 with Deck3', () => {
+    let deck = getCustomizedDeck3ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
+
+    blackjack.stand(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(23);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+});
+
+test('Test Blackjack Dealer Win Simulation2 with Deck2', () => {
+    let deck = getCustomizedDeck3ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+
+    blackjack.stand(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(22);
+    expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Won);
+    expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Lost);
+});
+
+test('Test Blackjack Player Win Simulation2 with Deck2', () => {
+    let deck = getCustomizedDeck3ForTesting();
+    let blackjack = new Blackjack(PLAYER_ID, 10, deck);
+    blackjack.deal(PLAYER_ID);
+    expect(blackjack.getDealerCards().length).toEqual(2);
+    expect(blackjack.getPlayerCards(PLAYER_ID).length).toEqual(2);
+
+
+    let status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(16);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(19);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(20);
+
+    blackjack.playHit(PLAYER_ID);
+    status = blackjack.getStatus();
+    expect(status.getGameStatus()).toEqual(GameStatus.Completed);
+    expect(status.getPlayers()[1].getHandValue()).toEqual(29);
+    expect(status.getPlayers()[0].getHandValue()).toEqual(13);
     expect(status.getPlayers()[1].getWinStatus()).toEqual(WinStatus.Lost);
     expect(status.getPlayers()[0].getWinStatus()).toEqual(WinStatus.Won);
 });

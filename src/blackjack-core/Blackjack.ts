@@ -103,23 +103,32 @@ class BlackJack {
         // In a multi player use case, you do not draw for dealer and compute win here,
         // instead you wait for all players to play and then the dealer draws and computes.
         this.drawCardsForDealerBlackjack();
+        // Set the game status to completed as the user has made his stand.
+        this._status = GameStatus.Completed;
         this.computeBlackjackStatus();
     }
 
     private validateIfCanPlay(user: UserType, playerId: number) {
-        if (this.getHandValue(user, playerId) > BLACKJACK_WIN_NUMBER) {
-            throw new EvalError('Cannot hit again. You have exceeded the Win Number.');
+        if (user != UserType.Dealer && 
+            (this._status === GameStatus.Completed || this.getHandValue(user, playerId) > BLACKJACK_WIN_NUMBER)) {
+            this._status = GameStatus.Completed;
+            throw new EvalError('Game has been completed. You cannot play anymore.');
         }
     }
     private computeBlackjackStatus() {
         let dealerHandValue = this.getHandValue(UserType.Dealer);
         let playerHandValue = this.getHandValue(UserType.Player);
-        if (dealerHandValue == BLACKJACK_WIN_NUMBER && playerHandValue == BLACKJACK_WIN_NUMBER) {
+        if ((dealerHandValue == BLACKJACK_WIN_NUMBER && playerHandValue == BLACKJACK_WIN_NUMBER) ||
+            (dealerHandValue == playerHandValue)) {
             this._status = GameStatus.Tie;
             return;
         }
 
-        if (BLACKJACK_WIN_NUMBER > playerHandValue && playerHandValue > dealerHandValue) {
+        if(dealerHandValue > BLACKJACK_WIN_NUMBER && playerHandValue < BLACKJACK_WIN_NUMBER){
+            this._winner = UserType.Player
+        } else if (playerHandValue > BLACKJACK_WIN_NUMBER && dealerHandValue < BLACKJACK_WIN_NUMBER){
+            this._winner = UserType.Dealer;
+        }else if (playerHandValue > dealerHandValue) {
             this._winner = UserType.Player
         }
 
@@ -135,6 +144,9 @@ class BlackJack {
     }
 
     private drawCardsForDealerBlackjack() {
+        if(this._status === GameStatus.Completed){
+            return;
+        }
         try {
             while (this.findHandValue(this._dealer_cards) < 17) {
                 this.hit(UserType.Dealer, -1);
