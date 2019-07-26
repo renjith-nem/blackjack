@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import BlackJackGame from './backjack-ui/PlayGame';
 import BlackJackRooms from './backjack-ui/Rooms';
+import LoginConatainer from './backjack-ui/Login';
 import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={BlackJackRooms} />
+        <Route exact path="/login" component={LoginConatainer} />
         <Route exact path="/rooms" component={BlackJackRooms} />
         <Route exact path="/rooms/:id" component={BlackJackGame} />
       </Switch>
