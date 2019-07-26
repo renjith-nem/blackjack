@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Deck, Card } from '../blackjack-core/Deck';
 import { Status, GameStatus, WinStatus } from '../blackjack-core/Status';
 import Blackjack from '../blackjack-core/Blackjack';
+import GameStatusContainer from './GameStatus';
 import {
   Button,
   Card as DisplayCard,
@@ -121,24 +122,6 @@ class GameContainer extends Component<any, any> {
         <GameStatusContainer gameStatus={gameStatus} />
       </div>
     );
-  }
-}
-
-class GameStatusContainer extends Component<any, any> {
-  render() {
-    const status: Status = this.props.gameStatus;
-    let data = [];
-    data.push(<div>Status : {GameStatus[status.getGameStatus()]}</div>);
-    if (status.getGameStatus() !== GameStatus.InProgress) {
-      data.push(
-        <div>Dealer Won : {WinStatus[status.getDealer().getWinStatus()]}</div>
-      );
-      data.push(
-        <div>Player Won : {WinStatus[status.getPlayer().getWinStatus()]}</div>
-      );
-      data.push(<div>Bet Won/Lost : {status.getAmountWonLost()}</div>);
-    }
-    return <div>{data}</div>;
   }
 }
 
