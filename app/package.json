@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.2.1",
     "@types/jest": "24.0.15",
     "@types/node": "12.6.8",
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "^4.3.4",
-    "husky": "^3.0.1",
     "lint-staged": "^9.2.1",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
@@ -49,5 +49,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001/api"
+  "proxy": "http://localhost:3001/api",
+  "devDependencies": {
+    "husky": "^3.0.1"
+  }
 }
