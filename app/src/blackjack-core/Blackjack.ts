@@ -94,7 +94,6 @@ class BlackJack {
   }
 
   hit(playerId: number) {
-    console.log('sdsd');
     this.playHit(UserType.Player, playerId);
   }
 
