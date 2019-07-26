@@ -4,11 +4,11 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.json([
-    {"name":"Ego",   "betSize":1},
-    {"name":"Earth", "betSize":2},
-    {"name":"Asgard", "betSize":5},
-    {"name":"Vormir", "betSize":20},
-    {"name":"Titan",  "betSize":100}
+    {"id" : 111, "name":"Ego",   "betSize":1},
+    {"id" : 121, "name":"Earth", "betSize":2},
+    {"id" : 131, "name":"Asgard", "betSize":5},
+    {"id" : 141, "name":"Vormir", "betSize":20},
+    {"id" : 151, "name":"Titan",  "betSize":100}
   ]
   );
  }); 

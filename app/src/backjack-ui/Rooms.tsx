@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Room } from './Models';
+import { Route, BrowserRouter as Router, Link, match } from 'react-router-dom';
+import BlackJackGame from './PlayGame';
 
 class BlackJackRooms extends Component<any, any> {
   constructor(props: any) {
@@ -21,6 +23,7 @@ class BlackJackRooms extends Component<any, any> {
   render() {
     let rooms: any = [];
     this.state.rooms.forEach(function(room: Room) {
+      let roomLink = '/rooms/' + room.id;
       rooms.push(
         <div>
           <span>{room.name}</span>
@@ -28,7 +31,7 @@ class BlackJackRooms extends Component<any, any> {
           <span>Min Bet Amount : {room.betSize}</span>
           <span> </span>
           <span>
-            <a href="/">Join</a>
+            <a href={roomLink}>Join</a>
           </span>
         </div>
       );
