@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button, Form, Card } from 'react-bootstrap';
+import './Login.css';
 
 class LoginContainer extends Component<any, any> {
   constructor(props: any) {
@@ -12,39 +14,46 @@ class LoginContainer extends Component<any, any> {
     this.handleLoginClick = this.handleLoginClick.bind(this);
   }
   render() {
-    console.log('dsff');
     return (
-      <div>
-        <form onSubmit={this.handleLoginClick}>
-          <label>
-            Username:
-            <input
-              type="text"
-              value={this.state.row}
-              name="username"
-              onChange={this.handleUsernameChange}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={this.state.column}
-              onChange={this.handlePasswordChange}
-            />
-          </label>
-          <input type="submit" value="Login" className="btn btn-primary" />
-        </form>
+      <div className="center">
+        <Card className="text-center">
+          <Card.Header></Card.Header>
+          <Card.Body>
+            <Card.Title>BlackJack</Card.Title>
+            <Card.Text>Login to your account</Card.Text>
+            <Form onSubmit={this.handleLoginClick}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Control
+                  placeholder="Enter username"
+                  value={this.state.username}
+                  onChange={this.handleUsernameChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicPassword">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.handlePasswordChange}
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Login
+              </Button>
+            </Form>
+          </Card.Body>
+          <Card.Footer className="text-muted"></Card.Footer>
+        </Card>
       </div>
     );
   }
 
-  handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleUsernameChange = (event: any) => {
     this.setState({ username: event.target.value });
   };
 
-  handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handlePasswordChange = (event: any) => {
     this.setState({ password: event.target.value });
   };
 

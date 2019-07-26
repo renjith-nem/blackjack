@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Room } from './Models';
 import { Route, BrowserRouter as Router, Link, match } from 'react-router-dom';
 import BlackJackGame from './PlayGame';
+import { Button, Accordion, Card } from 'react-bootstrap';
 
 class BlackJackRooms extends Component<any, any> {
   constructor(props: any) {
@@ -22,21 +23,33 @@ class BlackJackRooms extends Component<any, any> {
   }
   render() {
     let rooms: any = [];
+    let key = 0;
     this.state.rooms.forEach(function(room: Room) {
       let roomLink = '/rooms/' + room.id;
+      let keyStr = String(key);
+      key++;
+      console.log(keyStr);
       rooms.push(
-        <div>
-          <span>{room.name}</span>
-          <span> </span>
-          <span>Min Bet Amount : {room.betSize}</span>
-          <span> </span>
-          <span>
-            <a href={roomLink}>Join</a>
-          </span>
-        </div>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+              {room.name}
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey={keyStr}>
+            <Card.Body>
+              <div>
+                <span> Minimum Bet Amount = ${room.betSize}</span>
+              </div>
+              <div>
+                <a href={roomLink}>Join</a>
+              </div>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
       );
     });
-    return <div>{rooms}</div>;
+    return <Accordion defaultActiveKey="1">{rooms}</Accordion>;
   }
 }
 

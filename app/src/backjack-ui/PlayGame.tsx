@@ -1,18 +1,13 @@
-import React, { Component, FormEvent, ChangeEvent } from 'react';
-import {
-  Deck,
-  Suite,
-  CardValue,
-  HiddenCard,
-  Card
-} from '../blackjack-core/Deck';
-import {
-  Status,
-  GameStatus,
-  GamePlayer,
-  WinStatus
-} from '../blackjack-core/Status';
+import React, { Component } from 'react';
+import { Deck, Card } from '../blackjack-core/Deck';
+import { Status, GameStatus, WinStatus } from '../blackjack-core/Status';
 import Blackjack from '../blackjack-core/Blackjack';
+import {
+  Button,
+  Card as DisplayCard,
+  ButtonGroup,
+  ButtonToolbar
+} from 'react-bootstrap';
 
 class BlackJackGame extends Component<any, any> {
   render() {
@@ -84,21 +79,18 @@ class BlackJackGameContainer extends Component<any, any> {
   }
 
   hit = () => {
-    console.log('hto');
     let blackjack = this.state.blackjack;
     blackjack.hit(123);
     this.setState({ blackjack: blackjack });
   };
 
   stand = () => {
-    console.log('stand');
     let blackjack = this.state.blackjack;
     blackjack.stand(123);
     this.setState({ blackjack: blackjack });
   };
 
   playAgain = () => {
-    console.log('play again');
     let blackjack = this.state.blackjack;
     let deck = new Deck();
     blackjack = new Blackjack(123, 10, deck);
@@ -119,9 +111,7 @@ class GameContainer extends Component<any, any> {
     return (
       <div>
         <CardsConatiner cards={dealerCards} displayText={"Dealer's Cards"} />
-        <div>---------</div>
         <CardsConatiner cards={playerCards} displayText={'Your Cards'} />
-        <div>---------</div>
         <PlayerControls
           hitAction={hitAction}
           standAction={standAction}
@@ -155,17 +145,17 @@ class GameStatusContainer extends Component<any, any> {
 class PlayerControls extends Component<any, any> {
   render() {
     return (
-      <div>
-        <button type="button" onClick={this.props.hitAction}>
-          Hit !!
-        </button>
-        <button type="button" onClick={this.props.standAction}>
-          Stand !!
-        </button>
-        <button type="button" onClick={this.props.playAgainAction}>
-          Play Again !!
-        </button>
-      </div>
+      <ButtonToolbar aria-label="Toolbar with button groups">
+        <ButtonGroup className="mr-2" aria-label="First group">
+          <Button onClick={this.props.hitAction}> Hit </Button>
+          <Button onClick={this.props.standAction}> Stand </Button>
+        </ButtonGroup>
+
+        <ButtonGroup className="mr-2" aria-label="Second group">
+          <Button onClick={this.props.playAgainAction}> Play Again </Button>
+          <Button onClick={this.props.playAgainAction}> Quit </Button>
+        </ButtonGroup>
+      </ButtonToolbar>
     );
   }
 }
@@ -175,7 +165,7 @@ class CardsConatiner extends Component<any, any> {
     const cards: Array<Card> = this.props.cards;
     const displayText: string = this.props.displayText;
     let data: any = [];
-    data.push(<div>{displayText}</div>);
+    // data.push(<div>{displayText}</div>);
     cards.forEach(function(card) {
       let card_name = card.getSuite() + '_' + card.getCardValue();
       let src = require('../backjack-ui/resources/cards/' + card_name + '.png');
@@ -184,9 +174,18 @@ class CardsConatiner extends Component<any, any> {
           <img src={src} alt={card_name} />
         </span>
       );
-      data.push(<span> </span>);
     });
-    return <div>{data}</div>;
+    return (
+      <DisplayCard>
+        <DisplayCard.Header>{displayText}</DisplayCard.Header>
+        <DisplayCard.Body>
+          <blockquote className="blockquote mb-0">
+            <p>{data}</p>
+            <footer className="blockquote-footer">Hand Value :</footer>
+          </blockquote>
+        </DisplayCard.Body>
+      </DisplayCard>
+    );
   }
 }
 
