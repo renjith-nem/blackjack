@@ -154,10 +154,6 @@ class GameStatusContainer extends Component<any, any> {
 
 class PlayerControls extends Component<any, any> {
   render() {
-    // const hitAction = this.props.hitAction;
-    // const standAction = this.props.standAction;
-    // const playerId = this.props.playerId;
-    // console.log(hitAction);
     return (
       <div>
         <button type="button" onClick={this.props.hitAction}>
@@ -181,13 +177,14 @@ class CardsConatiner extends Component<any, any> {
     let data: any = [];
     data.push(<div>{displayText}</div>);
     cards.forEach(function(card) {
+      let card_name = card.getSuite() + '_' + card.getCardValue();
+      let src = require('../backjack-ui/resources/cards/' + card_name + '.png');
       data.push(
-        <div>
-          {Suite[card.getSuite()]} {CardValue[card.getCardValue()]}
-        </div>
+        <span>
+          <img src={src} alt={card_name} />
+        </span>
       );
-      // let src = '/resources/cards/' + card.getSuite() + '_' + card.getCardValue() + '.png';
-      // data.push(<img src={require(src)}alt="logo" />);
+      data.push(<span> </span>);
     });
     return <div>{data}</div>;
   }
