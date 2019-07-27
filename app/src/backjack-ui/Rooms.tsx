@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Room } from './Models';
-import { Card, CardDeck, Row, Container } from 'react-bootstrap';
+import { Card, CardDeck, Row, Col, Container } from 'react-bootstrap';
 
 class BlackJackRooms extends Component<any, any> {
   constructor(props: any) {
@@ -39,13 +39,25 @@ class BlackJackRooms extends Component<any, any> {
         </Card>
       );
     });
-    data.push(<Row className="justify-content-md-center">Available Rooms</Row>);
-    data.push(
-      <Row>
-        <CardDeck>{rooms}</CardDeck>
-      </Row>
+    data.push(<CardDeck>{rooms}</CardDeck>);
+
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Header>Available Rooms to Play</Card.Header>
+              <Card.Body>
+                <Card.Text>
+                  Select one of the rooms below to start Playing.
+                </Card.Text>
+                {data}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
-    return <Container>{data}</Container>;
   }
 }
 

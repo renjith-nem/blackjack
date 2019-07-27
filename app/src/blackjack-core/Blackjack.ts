@@ -42,7 +42,10 @@ class BlackJack {
       this.getHandValue(UserType.Player, this._playerId),
       this._playerId
     );
-    if (this._status === GameStatus.Completed) {
+    if (
+      this._status === GameStatus.Completed ||
+      this._status === GameStatus.Tie
+    ) {
       dealer = new GamePlayer(
         UserType.Dealer,
         this._betAmount,
