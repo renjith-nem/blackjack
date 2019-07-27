@@ -34,6 +34,14 @@ class BlackJack {
     let dealer = undefined;
     let player = undefined;
     let amountWonLost = 0;
+    player = new GamePlayer(
+      UserType.Player,
+      this._betAmount,
+      this.getPlayerCards(this._playerId),
+      this._winner === UserType.Player ? WinStatus.Won : WinStatus.Lost,
+      this.getHandValue(UserType.Player, this._playerId),
+      this._playerId
+    );
     if (this._status === GameStatus.Completed) {
       dealer = new GamePlayer(
         UserType.Dealer,
@@ -42,17 +50,9 @@ class BlackJack {
         this._winner === UserType.Dealer ? WinStatus.Won : WinStatus.Lost,
         this.getHandValue(UserType.Dealer)
       );
-      player = new GamePlayer(
-        UserType.Player,
-        this._betAmount,
-        this.getPlayerCards(this._playerId),
-        this._winner === UserType.Player ? WinStatus.Won : WinStatus.Lost,
-        this.getHandValue(UserType.Player, this._playerId),
-        this._playerId
-      );
       amountWonLost = this.calculateAmountWonOrLost(amountWonLost);
     }
-    let gameStatus = new Status(this._status, dealer!, player!, amountWonLost);
+    let gameStatus = new Status(this._status, dealer!, player, amountWonLost);
     return gameStatus;
   }
 

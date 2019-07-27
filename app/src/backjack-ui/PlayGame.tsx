@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Deck, Card } from '../blackjack-core/Deck';
-import { Status } from '../blackjack-core/Status';
+import { Status, GameStatus } from '../blackjack-core/Status';
 import Blackjack from '../blackjack-core/Blackjack';
 import GameStatusContainer from './GameStatus';
 import './Game.css';
@@ -113,6 +113,17 @@ class GameContainer extends Component<any, any> {
     const standAction = this.props.standAction;
     const playerId = this.props.playerId;
     const playAgainAction = this.props.playAgainAction;
+    let dealerScore = 'NA';
+    if (gameStatus.getGameStatus() === GameStatus.Completed) {
+      dealerScore = gameStatus
+        .getDealer()
+        .getHandValue()
+        .toString();
+    }
+    const playerScore = gameStatus
+      .getPlayer()
+      .getHandValue()
+      .toString();
     return (
       <Container>
         <Row className="boundary">
@@ -120,12 +131,17 @@ class GameContainer extends Component<any, any> {
             <CardsConatiner
               cards={dealerCards}
               displayText={"Dealer's Cards"}
+              score={dealerScore}
             />
           </Col>
         </Row>
         <Row className="boundary">
           <Col>
-            <CardsConatiner cards={playerCards} displayText={'Your Cards'} />
+            <CardsConatiner
+              cards={playerCards}
+              displayText={'Your Cards'}
+              score={playerScore}
+            />
           </Col>
         </Row>
         <Row className="boundary">
@@ -159,7 +175,7 @@ class PlayerControls extends Component<any, any> {
 
         <ButtonGroup className="mr-2" aria-label="Second group">
           <Button onClick={this.props.playAgainAction}> Play Again </Button>
-          <Button onClick={this.props.playAgainAction}> Quit </Button>
+          <Button href="/rooms"> Quit </Button>
         </ButtonGroup>
       </ButtonToolbar>
     );
@@ -170,6 +186,7 @@ class CardsConatiner extends Component<any, any> {
   render() {
     const cards: Array<Card> = this.props.cards;
     const displayText: string = this.props.displayText;
+    const score: string = this.props.score;
     let data: any = [];
     // data.push(<div>{displayText}</div>);
     cards.forEach(function(card) {
@@ -177,7 +194,7 @@ class CardsConatiner extends Component<any, any> {
       let src = require('../backjack-ui/resources/cards/' + card_name + '.png');
       data.push(
         <span>
-          <img src={src} alt={card_name} />
+          <img src={src} alt={card_name} className="card-boundary" />
         </span>
       );
     });
@@ -187,7 +204,7 @@ class CardsConatiner extends Component<any, any> {
         <DisplayCard.Body>
           <blockquote className="blockquote mb-0">
             <p>{data}</p>
-            <footer className="blockquote-footer">Hand Value :</footer>
+            <footer className="blockquote-footer">Hand Value : {score}</footer>
           </blockquote>
         </DisplayCard.Body>
       </DisplayCard>
