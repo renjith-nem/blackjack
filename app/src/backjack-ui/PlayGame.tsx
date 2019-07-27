@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Deck, Card } from '../blackjack-core/Deck';
-import { Status, GameStatus, WinStatus } from '../blackjack-core/Status';
+import { Status } from '../blackjack-core/Status';
 import Blackjack from '../blackjack-core/Blackjack';
 import GameStatusContainer from './GameStatus';
 import {
