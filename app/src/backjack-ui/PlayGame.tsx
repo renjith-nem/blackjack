@@ -114,11 +114,16 @@ class GameContainer extends Component<any, any> {
     const playerId = this.props.playerId;
     const playAgainAction = this.props.playAgainAction;
     let dealerScore = 'NA';
-    if (gameStatus.getGameStatus() === GameStatus.Completed) {
+    let gameCompleted: boolean = false;
+    if (
+      gameStatus.getGameStatus() === GameStatus.Completed ||
+      gameStatus.getGameStatus() === GameStatus.Tie
+    ) {
       dealerScore = gameStatus
         .getDealer()
         .getHandValue()
         .toString();
+      gameCompleted = true;
     }
     const playerScore = gameStatus
       .getPlayer()
@@ -151,6 +156,7 @@ class GameContainer extends Component<any, any> {
               standAction={standAction}
               playerId={playerId}
               playAgainAction={playAgainAction}
+              gameCompleted={gameCompleted}
             />
           </Col>
         </Row>
@@ -169,8 +175,20 @@ class PlayerControls extends Component<any, any> {
     return (
       <ButtonToolbar aria-label="Toolbar with button groups">
         <ButtonGroup className="mr-2" aria-label="First group">
-          <Button onClick={this.props.hitAction}> Hit </Button>
-          <Button onClick={this.props.standAction}> Stand </Button>
+          <Button
+            onClick={this.props.hitAction}
+            disabled={this.props.gameCompleted}
+          >
+            {' '}
+            Hit{' '}
+          </Button>
+          <Button
+            onClick={this.props.standAction}
+            disabled={this.props.gameCompleted}
+          >
+            {' '}
+            Stand{' '}
+          </Button>
         </ButtonGroup>
 
         <ButtonGroup className="mr-2" aria-label="Second group">
@@ -188,7 +206,6 @@ class CardsConatiner extends Component<any, any> {
     const displayText: string = this.props.displayText;
     const score: string = this.props.score;
     let data: any = [];
-    // data.push(<div>{displayText}</div>);
     cards.forEach(function(card) {
       let card_name = card.getSuite() + '_' + card.getCardValue();
       let src = require('../backjack-ui/resources/cards/' + card_name + '.png');

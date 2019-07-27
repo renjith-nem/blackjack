@@ -53,7 +53,10 @@ class BlackJack {
         this._winner === UserType.Dealer ? WinStatus.Won : WinStatus.Lost,
         this.getHandValue(UserType.Dealer)
       );
-      amountWonLost = this.calculateAmountWonOrLost(amountWonLost);
+      amountWonLost = this.calculateAmountWonOrLost(
+        this.getHandValue(UserType.Player, this._playerId),
+        amountWonLost
+      );
     }
     let gameStatus = new Status(this._status, dealer!, player, amountWonLost);
     return gameStatus;
@@ -97,17 +100,25 @@ class BlackJack {
   }
 
   hit(playerId: number) {
-    this.playHit(UserType.Player, playerId);
+    try {
+      this.playHit(UserType.Player, playerId);
+    } catch (e) {
+      console.log('Error: ', e);
+    }
   }
 
   stand(playerId: number) {
-    this.validateIfCanPlay(UserType.Player, playerId);
-    // In a multi player use case, you do not draw for dealer and compute win here,
-    // instead you wait for all players to play and then the dealer draws and computes.
-    this.drawCardsForDealerBlackjack();
-    // Set the game status to completed as the user has made his stand.
-    this._status = GameStatus.Completed;
-    this.computeBlackjackStatus();
+    try {
+      this.validateIfCanPlay(UserType.Player, playerId);
+      // In a multi player use case, you do not draw for dealer and compute win here,
+      // instead you wait for all players to play and then the dealer draws and computes.
+      this.drawCardsForDealerBlackjack();
+      // Set the game status to completed as the user has made his stand.
+      this._status = GameStatus.Completed;
+      this.computeBlackjackStatus();
+    } catch (e) {
+      console.log('Error: ', e);
+    }
   }
 
   private playHit(user: UserType, playerId: number) {
@@ -120,9 +131,12 @@ class BlackJack {
     this.validateIfCanPlay(user, playerId);
   }
 
-  private calculateAmountWonOrLost(amountWonLost: number): number {
+  private calculateAmountWonOrLost(
+    score: number,
+    amountWonLost: number
+  ): number {
     if (this._winner === UserType.Player) {
-      if (this._player_cards.length === 2) {
+      if (this._player_cards.length === 2 && score === BLACKJACK_WIN_NUMBER) {
         amountWonLost = this._betAmount + this._betAmount * 1.5;
       } else {
         amountWonLost += this._betAmount * 2;
@@ -185,7 +199,10 @@ class BlackJack {
     this._status = GameStatus.Completed;
   }
   private getHandValue(user: UserType, playerId: number = -1) {
-    if (user === UserType.Dealer && this._status === GameStatus.Completed) {
+    if (
+      user === UserType.Dealer &&
+      (this._status === GameStatus.Completed || this._status === GameStatus.Tie)
+    ) {
       return this.findHandValue(this._dealer_cards);
     } else if (user === UserType.Player && this._playerId === playerId) {
       return this.findHandValue(this._player_cards);

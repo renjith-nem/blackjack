@@ -12,7 +12,7 @@ ReactDOM.render(
   <div>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={BlackJackRooms} />
+        <Route exact path="/" component={LoginConatainer} />
         <Route exact path="/login" component={LoginConatainer} />
         <Route exact path="/rooms" component={BlackJackRooms} />
         <Route exact path="/rooms/:id" component={BlackJackGame} />

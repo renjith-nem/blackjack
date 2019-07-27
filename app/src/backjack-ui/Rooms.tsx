@@ -25,7 +25,7 @@ class BlackJackRooms extends Component<any, any> {
     this.state.rooms.forEach(function(room: Room) {
       let roomLink = '/rooms/' + room.id;
       rooms.push(
-        <Card>
+        <Card key={room.id}>
           <Card.Body>
             <Card.Title>{room.name}</Card.Title>
             <Card.Text>

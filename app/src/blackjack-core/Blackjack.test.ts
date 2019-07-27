@@ -139,7 +139,7 @@ test('Test Initialisation', () => {
 });
 
 test('Test Deal with Dealer card hidden', () => {
-  let deck = new Deck();
+  let deck = getCustomizedDeck1ForTesting();
   let blackjack = new Blackjack(PLAYER_ID, 10, deck);
   blackjack.deal();
   expect(blackjack.getDealerCards().length).toEqual(2);
@@ -193,13 +193,8 @@ test('Simulation2 with Deck1 : Dealer Win', () => {
   status = blackjack.getStatus();
   expect(status.getGameStatus()).toEqual(GameStatus.InProgress);
 
-  expect(() => {
-    blackjack.hit(PLAYER_ID);
-  }).toThrow();
-
-  expect(() => {
-    blackjack.stand(PLAYER_ID);
-  }).toThrow();
+  blackjack.hit(PLAYER_ID);
+  blackjack.stand(PLAYER_ID);
 
   status = blackjack.getStatus();
   expect(status.getGameStatus()).toEqual(GameStatus.Completed);
@@ -263,9 +258,7 @@ test('Simulation1 with Deck2 : Dealer Win', () => {
 
   blackjack.hit(PLAYER_ID);
   blackjack.hit(PLAYER_ID);
-  expect(() => {
-    blackjack.hit(PLAYER_ID);
-  }).toThrow();
+  blackjack.hit(PLAYER_ID);
 
   status = blackjack.getStatus();
   expect(status.getGameStatus()).toEqual(GameStatus.Completed);
@@ -368,9 +361,7 @@ test('Simulation3 with Deck3 : Dealer Win', () => {
 
   blackjack.hit(PLAYER_ID);
   blackjack.hit(PLAYER_ID);
-  expect(() => {
-    blackjack.hit(PLAYER_ID);
-  }).toThrow();
+  blackjack.hit(PLAYER_ID);
   status = blackjack.getStatus();
   expect(status.getGameStatus()).toEqual(GameStatus.Completed);
   expect(status.getPlayer().getHandValue()).toEqual(27);
@@ -383,13 +374,8 @@ test('Simulation1 with Deck4 : Blackjack Player Win', () => {
   let deck = getCustomizedDeck4ForTesting();
   let blackjack = new Blackjack(PLAYER_ID, 10, deck);
   blackjack.deal();
-  expect(() => {
-    blackjack.hit(PLAYER_ID);
-  }).toThrow();
-
-  expect(() => {
-    blackjack.stand(PLAYER_ID);
-  }).toThrow();
+  blackjack.hit(PLAYER_ID);
+  blackjack.stand(PLAYER_ID);
 
   let status = blackjack.getStatus();
   expect(status.getGameStatus()).toEqual(GameStatus.Completed);
@@ -408,9 +394,7 @@ test('Simulation1 with Deck5 : Dealer Win', () => {
   blackjack.hit(PLAYER_ID);
   blackjack.hit(PLAYER_ID);
   blackjack.hit(PLAYER_ID);
-  expect(() => {
-    blackjack.hit(PLAYER_ID);
-  }).toThrow();
+  blackjack.hit(PLAYER_ID);
 
   let status = blackjack.getStatus();
   expect(status.getGameStatus()).toEqual(GameStatus.Completed);

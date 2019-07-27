@@ -85,7 +85,7 @@ class LoginContainer extends Component<any, any> {
       })
       .then(resp => {
         if (resp.authenticated) {
-          this.props.history.push('/');
+          this.props.history.push('/rooms');
         } else {
           alert('Invalid Username and password..');
         }
