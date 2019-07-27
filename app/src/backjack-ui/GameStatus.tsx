@@ -16,7 +16,7 @@ class GameStatusContainer extends Component<any, any> {
       }
     }
     return (
-      <DisplayCard border="info" style={{ width: '25rem' }}>
+      <DisplayCard border="info">
         <DisplayCard.Header>Game Status</DisplayCard.Header>
         <DisplayCard.Body>
           <DisplayCard.Title>

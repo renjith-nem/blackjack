@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Card } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
 import './Login.css';
 
 class LoginContainer extends Component<any, any> {
@@ -15,37 +15,41 @@ class LoginContainer extends Component<any, any> {
   }
   render() {
     return (
-      <div className="center">
-        <Card className="text-center">
-          <Card.Header></Card.Header>
-          <Card.Body>
-            <Card.Title>BlackJack</Card.Title>
-            <Card.Text>Login to your account</Card.Text>
-            <Form onSubmit={this.handleLoginClick}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Control
-                  placeholder="Enter username"
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange}
-                />
-              </Form.Group>
+      <Container>
+        <Row className="justify-content-md-center">
+          <Col>
+            <Card className="text-center">
+              <Card.Header></Card.Header>
+              <Card.Body>
+                <Card.Title>BlackJack</Card.Title>
+                <Card.Text>Login to your account</Card.Text>
+                <Form onSubmit={this.handleLoginClick}>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Control
+                      placeholder="Enter username"
+                      value={this.state.username}
+                      onChange={this.handleUsernameChange}
+                    />
+                  </Form.Group>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange}
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Login
-              </Button>
-            </Form>
-          </Card.Body>
-          <Card.Footer className="text-muted"></Card.Footer>
-        </Card>
-      </div>
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.handlePasswordChange}
+                    />
+                  </Form.Group>
+                  <Button variant="primary" type="submit">
+                    Login
+                  </Button>
+                </Form>
+              </Card.Body>
+              <Card.Footer className="text-muted"></Card.Footer>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 
@@ -80,7 +84,6 @@ class LoginContainer extends Component<any, any> {
         return response.json();
       })
       .then(resp => {
-        console.log(resp);
         if (resp.authenticated) {
           this.props.history.push('/');
         } else {

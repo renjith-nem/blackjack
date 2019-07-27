@@ -3,11 +3,15 @@ import { Deck, Card } from '../blackjack-core/Deck';
 import { Status } from '../blackjack-core/Status';
 import Blackjack from '../blackjack-core/Blackjack';
 import GameStatusContainer from './GameStatus';
+import './Game.css';
 import {
   Button,
   Card as DisplayCard,
   ButtonGroup,
-  ButtonToolbar
+  ButtonToolbar,
+  Row,
+  Container,
+  Col
 } from 'react-bootstrap';
 
 class BlackJackGame extends Component<any, any> {
@@ -110,17 +114,36 @@ class GameContainer extends Component<any, any> {
     const playerId = this.props.playerId;
     const playAgainAction = this.props.playAgainAction;
     return (
-      <div>
-        <CardsConatiner cards={dealerCards} displayText={"Dealer's Cards"} />
-        <CardsConatiner cards={playerCards} displayText={'Your Cards'} />
-        <PlayerControls
-          hitAction={hitAction}
-          standAction={standAction}
-          playerId={playerId}
-          playAgainAction={playAgainAction}
-        />
-        <GameStatusContainer gameStatus={gameStatus} />
-      </div>
+      <Container>
+        <Row className="boundary">
+          <Col>
+            <CardsConatiner
+              cards={dealerCards}
+              displayText={"Dealer's Cards"}
+            />
+          </Col>
+        </Row>
+        <Row className="boundary">
+          <Col>
+            <CardsConatiner cards={playerCards} displayText={'Your Cards'} />
+          </Col>
+        </Row>
+        <Row className="boundary">
+          <Col>
+            <PlayerControls
+              hitAction={hitAction}
+              standAction={standAction}
+              playerId={playerId}
+              playAgainAction={playAgainAction}
+            />
+          </Col>
+        </Row>
+        <Row className="boundary">
+          <Col>
+            <GameStatusContainer gameStatus={gameStatus} />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
